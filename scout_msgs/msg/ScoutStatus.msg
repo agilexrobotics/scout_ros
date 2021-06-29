@@ -20,6 +20,8 @@ float64 battery_voltage
 
 # motor state
 ScoutMotorState[4] motor_states
+# driver state
+ScoutDriverState[4] driver_states
 
 # light state
 bool light_control_enabled

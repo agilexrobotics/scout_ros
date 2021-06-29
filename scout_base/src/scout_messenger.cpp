@@ -12,6 +12,7 @@
 #include <tf/transform_broadcaster.h>
 
 #include "scout_msgs/ScoutStatus.h"
+#include "scout_msgs/ScoutBmsStatus.h"
 
 namespace westonrobot
 {
@@ -27,6 +28,7 @@ namespace westonrobot
     odom_publisher_ = nh_->advertise<nav_msgs::Odometry>(odom_topic_name_, 50);
     status_publisher_ =
         nh_->advertise<scout_msgs::ScoutStatus>("/scout_status", 10);
+    BMS_status_publisher_ = nh_->advertise<scout_msgs::ScoutBmsStatus>("/BMS_status", 10);
 
     // cmd subscriber
     motion_cmd_subscriber_ = nh_->subscribe<geometry_msgs::Twist>(
@@ -147,6 +149,7 @@ namespace westonrobot
 
     // publish scout state message
     scout_msgs::ScoutStatus status_msg;
+    scout_msgs::ScoutBmsStatus bms_status;
 
     status_msg.header.stamp = current_time_;
 
@@ -163,6 +166,10 @@ namespace westonrobot
       status_msg.motor_states[i].current = state.actuator_states[i].motor_current;
       status_msg.motor_states[i].rpm = state.actuator_states[i].motor_rpm;
       status_msg.motor_states[i].temperature = state.actuator_states[i].motor_temperature;
+      status_msg.motor_states[i].motor_pose = state.actuator_states[i].motor_pulses;
+      status_msg.driver_states[i].driver_state = state.actuator_states[i].driver_state;
+      status_msg.driver_states[i].driver_voltage = state.actuator_states[i].driver_voltage;
+      status_msg.driver_states[i].driver_temperature = state.actuator_states[i].driver_temperature;
     }
 
     status_msg.light_control_enabled = state.light_control_enabled;
@@ -172,7 +179,19 @@ namespace westonrobot
     status_msg.rear_light_state.mode = state.rear_light_state.mode;
     status_msg.rear_light_state.custom_value =
         state.front_light_state.custom_value;
+
+    bms_status.SOC = state.SOC;
+    bms_status.SOH = state.SOH;
+    bms_status.battery_voltage = state.bms_battery_voltage;
+    bms_status.battery_current = state.battery_current;
+    bms_status.battery_temperature = state.battery_temperature;
+    bms_status.Alarm_Status_1 = state.Alarm_Status_1;
+    bms_status.Alarm_Status_2 = state.Alarm_Status_2;
+    bms_status.Warning_Status_1 = state.Warning_Status_1;
+    bms_status.Warning_Status_2 = state.Warning_Status_2;
+
     status_publisher_.publish(status_msg);
+    BMS_status_publisher_.publish(bms_status);
 
     // publish odometry and tf
     PublishOdometryToROS(state.linear_velocity, state.angular_velocity, dt);
