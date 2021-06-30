@@ -50,13 +50,18 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
 
     ```
     $ cd ~/catkin_ws/src
-    $ git clone --recursive https://github.com/agilexrobotics/ugv_sdk.git
+    $ git clone --recursive https://github.com/agilexrobotics/ugv_sdk.git  
     $ git clone https://github.com/agilexrobotics/scout_ros.git
     $ cd ..
     $ catkin_make
     ```
+    if your car is 1.0 version,Please run this command to switch ugv_sdk to 1.0 version
+    ```
+    $ cd ugv_sdk && git checkout master
+    ```
+    then recompile
 
-4. Launch ROS nodes
+3. Launch ROS nodes
  
 * Start the base node for the real robot
 

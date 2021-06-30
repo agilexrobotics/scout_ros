@@ -88,6 +88,11 @@ $ sudo usermod -a -G dialout $USER
     $ cd ..
     $ catkin_make
     ```
+    如果你买的小车版本是1.0通信协议版本，执行以下指令切换ugv_sdk的版本至1.0版本
+    ```
+    $ cd ugv_sdk && git checkout master
+    ```
+    然后重新编译
 
 3. 启动 ROS nodes
  
@@ -96,6 +101,8 @@ $ sudo usermod -a -G dialout $USER
     ```
     $ roslaunch scout_bringup scout_minimal.launch
     ```
+
+
 
     or (if you're using a serial port)
         
