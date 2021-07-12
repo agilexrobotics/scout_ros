@@ -22,7 +22,7 @@ The nodes in this ROS package are made to handle only the control of the scout b
 **Alternative odometry calculation**
 
 By default the scout_base package will publish odometry message to topic "/odom". In case you want to use a different approach to calculate the odometry, for example estimating the position together with an IMU, you could rename the default odometry topic to be something else.
- 
+
 ```
 $ scout_bringup scout_minimal.launch odom_topic_name:="<custom_name>"
 ```
@@ -62,8 +62,8 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
     then recompile
 
 3. Launch ROS nodes
- 
-* Start the base node for the real robot
+
+* Start the base node for scout
 
     ```
     $ roslaunch scout_bringup scout_minimal.launch
@@ -77,13 +77,11 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
     - odom_topic_name: sets the name of the topic which calculated odometry is published to, defaults = "odom"
     - is_scout_mini:Suitable for chassis of type scout_mini,defaults = "false"
 
-    or (if you're using a serial port)
-        
-    ```
-    $ roslaunch scout_bringup scout_minimal_uart.launch
-    ```
+* Start the base node for scout-mini
 
-    - Similarly, the [scout_bringup_uart.launch](scout_bringup/launch/scout_minimal_uart.launch) has the same 5 parameters with port_name default = "/dev/ttyUSB0".
+    ```
+    $ roslaunch scout_bringup scout_mini_minimal.launch
+    ```
 
 
 * Start the keyboard tele-op node

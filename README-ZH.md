@@ -95,19 +95,17 @@ $ sudo usermod -a -G dialout $USER
     然后重新编译
 
 3. 启动 ROS nodes
- 
-* 开始 the base node 
+
+* 启动scout车节点 
 
     ```
     $ roslaunch scout_bringup scout_minimal.launch
     ```
+    
+* 启动scout-mini车节点 
 
-
-
-    or (if you're using a serial port)
-        
     ```
-    $ roslaunch scout_bringup scout_minimal_uart.launch
+    $ roslaunch scout_bringup scout_mini_minimal.launch
     ```
 
 * Start the keyboard tele-op node
