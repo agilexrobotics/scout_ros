@@ -10,6 +10,7 @@
         <arg name="port_name" default="$(arg port_name)" />
         <arg name="simulated_robot" default="$(arg simulated_robot)" />
         <arg name="odom_topic_name" default="$(arg odom_topic_name)" />
+        <arg name="is_scout_mini" default="$(arg is_scout_mini)" />
     </include>
 
     <include file="$(find scout_description)/launch/description.launch">

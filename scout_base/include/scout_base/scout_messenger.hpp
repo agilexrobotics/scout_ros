@@ -18,7 +18,8 @@
 #include <tf2_ros/transform_broadcaster.h>
 
 #include "scout_msgs/ScoutLightCmd.h"
-#include "ugv_sdk/scout/scout_base.hpp"
+#include "ugv_sdk/mobile_robot/scout_robot.hpp"
+#include <mutex>
 
 namespace westonrobot
 {
@@ -26,7 +27,7 @@ class ScoutROSMessenger
 {
 public:
     explicit ScoutROSMessenger(ros::NodeHandle *nh);
-    ScoutROSMessenger(ScoutBase *scout, ros::NodeHandle *nh);
+    ScoutROSMessenger(ScoutRobot *scout, ros::NodeHandle *nh);
 
     std::string odom_frame_;
     std::string base_frame_;
@@ -43,7 +44,7 @@ public:
     void GetCurrentMotionCmdForSim(double &linear, double &angular);
 
 private:
-    ScoutBase *scout_;
+    ScoutRobot *scout_;
     ros::NodeHandle *nh_;
 
     std::mutex twist_mutex_;
