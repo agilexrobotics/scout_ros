@@ -20,7 +20,8 @@ int main(int argc, char **argv) {
 
   // check wether controlling scout mini
   bool is_scout_mini = false;
-  private_node.param<bool>("is_scout_mini", is_scout_mini, false);
+  //private_node.param<bool>("is_scout_mini", is_scout_mini, false);
+  node.getParam("is_scout_mini",is_scout_mini);
   std::cout << "Working as scout mini: " << is_scout_mini << std::endl;
 
   // check protocol version
@@ -63,7 +64,7 @@ int main(int argc, char **argv) {
   private_node.param<int>("control_rate", messenger.sim_control_rate_, 50);
   private_node.param<std::string>("odom_topic_name", messenger.odom_topic_name_,
                                   std::string("odom"));
-
+  private_node.param<bool>("pub_tf", messenger.pub_tf,true);
   if (!messenger.simulated_robot_) {
     // connect to robot and setup ROS subscription
     if (port_name.find("can") != std::string::npos) {
