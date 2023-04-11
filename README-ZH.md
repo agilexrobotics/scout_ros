@@ -108,6 +108,12 @@ $ sudo usermod -a -G dialout $USER
     $ roslaunch scout_bringup scout_mini_minimal.launch
     ```
 
+* 启动scout-mini车的全向轮模式（麦克纳母轮）
+
+    ```bash
+    $ roslaunch scout_bringup scout_miniomni_robot_base.launch
+    ```
+
 * Start the keyboard tele-op node
 
     ```

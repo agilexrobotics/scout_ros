@@ -101,6 +101,12 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
     $ roslaunch scout_bringup scout_mini_robot_base.launch
     ```
 
+* Start the base node for scout-min(omni mode)
+
+    ```bash
+    $ roslaunch scout_bringup scout_miniomni_robot_base.launch
+    ```
+
 
 * Start the keyboard tele-op node
 
