@@ -88,7 +88,7 @@ namespace westonrobot
           }
           case scout_msgs::ScoutLightCmd::LIGHT_CUSTOM:
           {
-            cmd.front_light.mode = LightMode::CUSTOM;
+            cmd.front_light.mode = CUSTOM;
             cmd.front_light.custom_value = msg->front_custom_value;
             break;
           }
