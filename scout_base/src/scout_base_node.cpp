@@ -25,7 +25,7 @@ int main(int argc, char **argv) {
   std::cout << "Working as scout mini: " << is_scout_mini << std::endl;
 
   // check protocol version
-  ProtocolDectctor detector;
+  ProtocolDetector detector;
   try
   {
       detector.Connect("can0");
