@@ -93,6 +93,24 @@
         <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="3.14 0 0" />
     </xacro:scout_wheel_type2>
 
+
+
+    <link name="front_mount" />
+
+    <joint name="front_mount_joint" type="fixed">
+        <origin xyz="0.325 0 0.112701" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="front_mount" />
+    </joint>
+
+    <link name="rear_mount" />
+
+    <joint name="rear_mount_joint" type="fixed">
+        <origin xyz="-0.325 0 0.112701" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="rear_mount" />
+    </joint>
+
     <!-- Additional definitions -->
     <xacro:include filename="$(arg urdf_extras)" />
 
