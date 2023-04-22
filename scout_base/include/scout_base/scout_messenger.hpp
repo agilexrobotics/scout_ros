@@ -27,13 +27,13 @@ class ScoutROSMessenger
 {
 public:
     explicit ScoutROSMessenger(ros::NodeHandle *nh);
-    ScoutROSMessenger(ScoutRobot *scout, ros::NodeHandle *nh);
+    ScoutROSMessenger(ScoutRobot *scout, ros::NodeHandle *nh, bool is_scout_omni);
 
     std::string odom_frame_;
     std::string base_frame_;
     std::string odom_topic_name_;
     bool pub_tf;
-
+    bool is_scout_omni;
     bool simulated_robot_ = false;
     int sim_control_rate_ = 50;
 

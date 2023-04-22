@@ -20,8 +20,8 @@ namespace westonrobot
   ScoutROSMessenger::ScoutROSMessenger(ros::NodeHandle *nh)
       : scout_(nullptr), nh_(nh) {}
 
-  ScoutROSMessenger::ScoutROSMessenger(ScoutRobot *scout, ros::NodeHandle *nh)
-      : scout_(scout), nh_(nh) {}
+  ScoutROSMessenger::ScoutROSMessenger(ScoutRobot *scout, ros::NodeHandle *nh, bool is_scout_omni)
+      : scout_(scout), nh_(nh) ,is_scout_omni(is_scout_omni){}
 
   void ScoutROSMessenger::SetupSubscription()
   {
@@ -42,7 +42,10 @@ namespace westonrobot
   {
     if (!simulated_robot_)
     {
-      scout_->SetMotionCommand(msg->linear.x, msg->angular.z);
+      if(is_scout_omni)
+        dynamic_cast<ScoutMiniOmniRobot*>(scout_)->SetMotionCommand(msg->linear.x, msg->angular.z, msg->linear.y);
+      else
+        scout_->SetMotionCommand(msg->linear.x, msg->angular.z);
     }
     else
     {
