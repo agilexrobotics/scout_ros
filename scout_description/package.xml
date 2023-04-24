@@ -4,6 +4,7 @@
   <version>0.4.2</version>
   <description>AgileX Scout URDF description</description>
   
+  <maintainer email="support@agilex.ai"></maintainer>
   <license>BSD</license>
 
   <buildtool_depend>catkin</buildtool_depend>
