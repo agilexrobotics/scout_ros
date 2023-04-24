@@ -14,8 +14,8 @@
 	<arg name="pub_tf" default="$(arg pub_tf)" />
     </include>
 
-    <include file="$(find scout_description)/launch/description.launch">
+    <!--include file="$(find scout_description)/launch/description.launch">
         <arg name="model_xacro" default="$(arg model_xacro)" />
-    </include>
+    </include-->
 
 </launch>
