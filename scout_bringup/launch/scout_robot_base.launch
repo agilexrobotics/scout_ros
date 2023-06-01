@@ -6,7 +6,7 @@
     <arg name="odom_topic_name" default="odom" />
     <arg name="is_scout_mini" default="false" />
     <arg name="is_scout_omni" default="false" />
-    <arg name="pub_tf" default="false" />
+    <arg name="pub_tf" default="true" />
 
     <!-- RVIZ Arguments -->
     <arg name="rviz_on" default="false" />

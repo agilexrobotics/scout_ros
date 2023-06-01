@@ -96,7 +96,7 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
         - odom_topic_name: sets the name of the topic which calculated odometry is published to, defaults = "odom"
         - is_scout_mini: set to true for chassis of type scout_mini, defaults = "false"
         - is_scout_omni: set to true for chassis of type scout_mini_omni, defaults = "false"
-        - pub_tf: set to true to publish the odom to base_link transform on /tf, defaults = "false"
+        - pub_tf: set to true to publish the odom to base_link transform on /tf, defaults = "true"
         - rviz_on: set to true to launch RVIZ, defaults = "false"
         - rviz_config: set the RVIZ config file to use, defaults = "scout_bringup/rviz/scout.rviz"
 
