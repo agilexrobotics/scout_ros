@@ -81,28 +81,24 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
 
 4. Launch ROS nodes
 
-* Start the base node for scout using the `scout_robot_base.launch` file. The [scout_bringup/scout_robot_base.launch](scout_bringup/launch/scout_robot_base.launch) has 7 parameters:
+* Start the base node for scout using the [scout_bringup/launch/scout_robot_base.launch](scout_bringup/launch/scout_robot_base.launch) file. 
+    * Launch Examples:
+        - Scout robot: `roslaunch scout_bringup scout_robot_base.launch`
+        - Scout mini robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true`
+        - Scout mini omni robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true is_scout_omni:=true`
+    * The file launches the following nodes:
+        - [scout_base/src/scout_base_node](scout_base/src/scout_base_node.cpp) - which connects to the physical robot via the CAN interface or simulates a robot.
+        - [robot_state_publisher](http://wiki.ros.org/robot_state_publisher) - which publishes the robot transforms using a URDF.
+        - [rviz](http://wiki.ros.org/rviz) - if enabled
+    * The launch file has 8 parameters:
+        - port_name: specifies the port used to communicate with the robot, default = "can0"
+        - simulated_robot: indicates if launching with a simulation, default = "false"
+        - odom_topic_name: sets the name of the topic which calculated odometry is published to, defaults = "odom"
+        - is_scout_mini: set to true for chassis of type scout_mini, defaults = "false"
+        - is_scout_omni: set to true for chassis of type scout_mini_omni, defaults = "false"
+        - pub_tf: set to true to publish the odom to base_link transform on /tf, defaults = "false"
+        - rviz_on: set to true to launch RVIZ, defaults = "false"
+        - rviz_config: set the RVIZ config file to use, defaults = "scout_bringup/rviz/scout.rviz"
 
-    - port_name: specifies the port used to communicate with the robot, default = "can0"
-    - simulated_robot: indicates if launching with a simulation, default = "false"
-    - model_xacro: specifies the target ".xacro" file for the publishing of tf frames, default = [scout_v2.xacro](scout_base/description/scout_v2.xacro)
-    - odom_topic_name: sets the name of the topic which calculated odometry is published to, defaults = "odom"
-    - is_scout_mini: set to true for chassis of type scout_mini, defaults = "false"
-    - is_scout_omni: set to true for chassis of type scout_mini_omni, defaults = "false"
-    - pub_tf: set to true to publish the odom to base_link transform on /tf, defaults = "false"
-
-* Launch Examples:
-    * Scout robot: `roslaunch scout_bringup scout_robot_base.launch`
-    * Scout mini robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true`
-    * Scout mini omni robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true is_scout_omni:=true`
-
-
-* Start the keyboard tele-op node
-
-    ```
-    $ roslaunch scout_bringup scout_teleop_keyboard.launch
-    ```
-
-    **SAFETY PRECAUSION**: 
-
-    The default command values of the keyboard teleop node are high, make sure you decrease the speed commands before starting to control the robot with your keyboard! Have your remote controller ready to take over the control whenever necessary. 
+* Start the keyboard tele-op node: `roslaunch scout_bringup scout_teleop_keyboard.launch`
+    - **SAFETY PRECAUTION**: The default command values of the keyboard teleop node are high, make sure you decrease the speed commands before starting to control the robot with your keyboard! Have your remote controller ready to take over the control whenever necessary. 
