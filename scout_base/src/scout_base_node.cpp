@@ -28,49 +28,56 @@ int main(int argc, char **argv) {
   private_node.getParam("is_scout_omni",is_scout_omni);
   std::cout << "Working as scout omni: " << is_scout_omni << std::endl;
 
+  bool simulated_robot = false;
+  private_node.getParam("simulated_robot",simulated_robot);
+  std::cout << "Simulated robot: " << simulated_robot << std::endl;
+
   // check protocol version
   ProtocolDetector detector;
-  try
+  if (!simulated_robot) 
   {
-      detector.Connect("can0");
-      auto proto = detector.DetectProtocolVersion(5);
-      if(is_scout_mini && is_scout_omni)
-      {
-          if (proto == ProtocolVersion::AGX_V1) {
-              std::cout << "Detected protocol: AGX_V1 omni" << std::endl;
-              robot = std::unique_ptr<ScoutMiniOmniRobot>(
-                          new ScoutMiniOmniRobot(ProtocolVersion::AGX_V1));
-          } else if (proto == ProtocolVersion::AGX_V2) {
-              std::cout << "Detected protocol: AGX_V2 omni" << std::endl;
-              robot = std::unique_ptr<ScoutMiniOmniRobot>(
-                          new ScoutMiniOmniRobot(ProtocolVersion::AGX_V2));
-          } else {
-              std::cout << "Detected protocol: UNKONWN" << std::endl;
-              return -1;
-          }
-      }
-      else
-      {
-          if (proto == ProtocolVersion::AGX_V1) {
-              std::cout << "Detected protocol: AGX_V1" << std::endl;
-              robot = std::unique_ptr<ScoutRobot>(
-                          new ScoutRobot(ProtocolVersion::AGX_V1, is_scout_mini));
-          } else if (proto == ProtocolVersion::AGX_V2) {
-              std::cout << "Detected protocol: AGX_V2" << std::endl;
-              robot = std::unique_ptr<ScoutRobot>(
-                          new ScoutRobot(ProtocolVersion::AGX_V2, is_scout_mini));
-          } else {
-              std::cout << "Detected protocol: UNKONWN" << std::endl;
-              return -1;
-          }
-      }
-      if (robot == nullptr)
-          std::cout << "Failed to create robot object" << std::endl;
-  }
-  catch (const std::exception error)
-  {
-      ROS_ERROR("please bringup up can or make sure can port exist");
-      ros::shutdown();
+    try
+    {
+        detector.Connect("can0");
+        auto proto = detector.DetectProtocolVersion(5);
+        if(is_scout_mini && is_scout_omni)
+        {
+            if (proto == ProtocolVersion::AGX_V1) {
+                std::cout << "Detected protocol: AGX_V1 omni" << std::endl;
+                robot = std::unique_ptr<ScoutMiniOmniRobot>(
+                            new ScoutMiniOmniRobot(ProtocolVersion::AGX_V1));
+            } else if (proto == ProtocolVersion::AGX_V2) {
+                std::cout << "Detected protocol: AGX_V2 omni" << std::endl;
+                robot = std::unique_ptr<ScoutMiniOmniRobot>(
+                            new ScoutMiniOmniRobot(ProtocolVersion::AGX_V2));
+            } else {
+                std::cout << "Detected protocol: UNKONWN" << std::endl;
+                return -1;
+            }
+        }
+        else
+        {
+            if (proto == ProtocolVersion::AGX_V1) {
+                std::cout << "Detected protocol: AGX_V1" << std::endl;
+                robot = std::unique_ptr<ScoutRobot>(
+                            new ScoutRobot(ProtocolVersion::AGX_V1, is_scout_mini));
+            } else if (proto == ProtocolVersion::AGX_V2) {
+                std::cout << "Detected protocol: AGX_V2" << std::endl;
+                robot = std::unique_ptr<ScoutRobot>(
+                            new ScoutRobot(ProtocolVersion::AGX_V2, is_scout_mini));
+            } else {
+                std::cout << "Detected protocol: UNKONWN" << std::endl;
+                return -1;
+            }
+        }
+        if (robot == nullptr)
+            std::cout << "Failed to create robot object" << std::endl;
+    }
+    catch (const std::exception error)
+    {
+        ROS_ERROR("please bringup up can or make sure can port exist");
+        ros::shutdown();
+    }
   }
   ScoutROSMessenger messenger(robot.get(),&node,is_scout_omni);
 
