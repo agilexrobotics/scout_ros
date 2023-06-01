@@ -81,31 +81,20 @@ Nvidia Jeston TX2/Xavier/XavierNX have CAN controller(s) integrated in the main 
 
 4. Launch ROS nodes
 
-* Start the base node for scout
-
-    ```
-    $ roslaunch scout_bringup scout_robot_base.launch 
-    ```
-
-    The [scout_bringup/scout_minimal.launch](scout_bringup/launch/scout_minimal.launch) has 5 parameters:
+* Start the base node for scout using the `scout_robot_base.launch` file. The [scout_bringup/scout_robot_base.launch](scout_bringup/launch/scout_robot_base.launch) has 7 parameters:
 
     - port_name: specifies the port used to communicate with the robot, default = "can0"
     - simulated_robot: indicates if launching with a simulation, default = "false"
     - model_xacro: specifies the target ".xacro" file for the publishing of tf frames, default = [scout_v2.xacro](scout_base/description/scout_v2.xacro)
     - odom_topic_name: sets the name of the topic which calculated odometry is published to, defaults = "odom"
-    - is_scout_mini:Suitable for chassis of type scout_mini,defaults = "false"
+    - is_scout_mini: set to true for chassis of type scout_mini, defaults = "false"
+    - is_scout_omni: set to true for chassis of type scout_mini_omni, defaults = "false"
+    - pub_tf: set to true to publish the odom to base_link transform on /tf, defaults = "false"
 
-* Start the base node for scout-mini
-
-    ```
-    $ roslaunch scout_bringup scout_mini_robot_base.launch
-    ```
-
-* Start the base node for scout-min(omni mode)
-
-    ```bash
-    $ roslaunch scout_bringup scout_miniomni_robot_base.launch
-    ```
+* Launch Examples:
+    * Scout robot: `roslaunch scout_bringup scout_robot_base.launch`
+    * Scout mini robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true`
+    * Scout mini omni robot: `roslaunch scout_bringup scout_robot_base.launch is_scout_mini:=true is_scout_omni:=true`
 
 
 * Start the keyboard tele-op node
