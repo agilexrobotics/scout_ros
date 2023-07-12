@@ -3,7 +3,6 @@
 <robot name="scout_mini" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <xacro:arg name="robot_namespace" default="/" />
-    <xacro:arg name="urdf_extras" default="empty.urdf" />
 
     <xacro:include filename="$(find scout_description)/urdf/scout_mini_wheel.xacro" />
 
@@ -90,7 +89,6 @@
     </joint>
 
     <!-- Additional definitions -->
-    <xacro:include filename="$(arg urdf_extras)" />
 
     <!-- Gazebo definitions  -->
     <xacro:include filename="$(find scout_description)/urdf/scout_mini.gazebo" />
