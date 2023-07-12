@@ -10,7 +10,7 @@
 
     <!-- RVIZ Arguments -->
     <arg name="rviz_on" default="false" />
-    <arg name="rviz_config" default="$(find scout_bringup)/rviz/scout.rviz" />
+    <arg name="rviz_config" default="$(find scout_description)/rviz/scout.rviz" />
 
 
     <!-- LAUNCH FILES -->
