@@ -158,6 +158,8 @@ namespace westonrobot
     status_msg.header.stamp = current_time_;
     status_msg.linear_velocity = robot_state.motion_state.linear_velocity;
     status_msg.angular_velocity = robot_state.motion_state.angular_velocity;
+    if(is_scout_omni)
+      status_msg.lateral_velocity = robot_state.motion_state.lateral_velocity;
     status_msg.base_state = robot_state.system_state.vehicle_state;
     status_msg.control_mode = robot_state.system_state.control_mode;
     status_msg.fault_code = robot_state.system_state.error_code;
@@ -209,7 +211,13 @@ namespace westonrobot
 
 
     // publish odometry and tf
+    if(is_scout_omni)
+      PublishOdometryToROSOmni(robot_state.motion_state.linear_velocity, 
+                            robot_state.motion_state.angular_velocity, 
+                              robot_state.motion_state.lateral_velocity,dt);
+    else
     PublishOdometryToROS(robot_state.motion_state.linear_velocity, robot_state.motion_state.angular_velocity, dt);
+
 
     // record time for next integration
     last_time_ = current_time_;
@@ -299,4 +307,54 @@ namespace westonrobot
 
     odom_publisher_.publish(odom_msg);
   }
+
+  //TODO if the omni mode is stable, merge this function into PublishOdometryToROS
+  void ScoutROSMessenger::PublishOdometryToROSOmni(double linear, double angular, double lateral_velocity, double dt)
+  {
+    // perform numerical integration to get an estimation of pose
+    linear_speed_ = linear;
+    angular_speed_ = angular;
+    lateral_speed_ = lateral_velocity;
+
+    double d_x = (linear_speed_ * std::cos(theta_) - lateral_speed_ * std::sin(theta_)) * dt;
+    double d_y = (linear_speed_ * std::sin(theta_) + lateral_speed_ * std::cos(theta_)) * dt;
+    double d_theta = angular_speed_ * dt;
+
+    position_x_ += d_x;
+    position_y_ += d_y;
+    theta_ += d_theta;
+
+    geometry_msgs::Quaternion odom_quat = tf::createQuaternionMsgFromYaw(theta_);
+
+    // publish tf transformation
+    geometry_msgs::TransformStamped tf_msg;
+    tf_msg.header.stamp = current_time_;
+    tf_msg.header.frame_id = odom_frame_;
+    tf_msg.child_frame_id = base_frame_;
+
+    tf_msg.transform.translation.x = position_x_;
+    tf_msg.transform.translation.y = position_y_;
+    tf_msg.transform.translation.z = 0.0;
+    tf_msg.transform.rotation = odom_quat;
+
+    if(pub_tf)tf_broadcaster_.sendTransform(tf_msg);
+
+    // publish odometry and tf messages
+    nav_msgs::Odometry odom_msg;
+    odom_msg.header.stamp = current_time_;
+    odom_msg.header.frame_id = odom_frame_;
+    odom_msg.child_frame_id = base_frame_;
+
+    odom_msg.pose.pose.position.x = position_x_;
+    odom_msg.pose.pose.position.y = position_y_;
+    odom_msg.pose.pose.position.z = 0.0;
+    odom_msg.pose.pose.orientation = odom_quat;
+
+    odom_msg.twist.twist.linear.x = linear_speed_;
+    odom_msg.twist.twist.linear.y = 0.0;
+    odom_msg.twist.twist.angular.z = angular_speed_;
+
+    odom_publisher_.publish(odom_msg);
+  }
+
 } // namespace westonrobot
