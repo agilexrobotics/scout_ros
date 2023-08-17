@@ -1,3 +1,4 @@
+<?xml version="1.0" ?>
 <launch>
     <arg name="repeat_rate" value="50.0" />
 
