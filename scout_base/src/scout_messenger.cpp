@@ -305,6 +305,13 @@ namespace westonrobot
     odom_msg.twist.twist.linear.y = 0.0;
     odom_msg.twist.twist.angular.z = angular_speed_;
 
+    odom_msg.pose.covariance[0] = 0.1;
+    odom_msg.pose.covariance[7] = 0.1;
+    odom_msg.pose.covariance[14] = 0.1;
+    odom_msg.pose.covariance[21] = 1.0;
+    odom_msg.pose.covariance[28] = 1.0;
+    odom_msg.pose.covariance[35] = 1.0;
+
     odom_publisher_.publish(odom_msg);
   }
 
@@ -353,6 +360,13 @@ namespace westonrobot
     odom_msg.twist.twist.linear.x = linear_speed_;
     odom_msg.twist.twist.linear.y = 0.0;
     odom_msg.twist.twist.angular.z = angular_speed_;
+
+    odom_msg.pose.covariance[0] = 0.1;
+    odom_msg.pose.covariance[7] = 0.1;
+    odom_msg.pose.covariance[14] = 0.1;
+    odom_msg.pose.covariance[21] = 1.0;
+    odom_msg.pose.covariance[28] = 1.0;
+    odom_msg.pose.covariance[35] = 1.0;
 
     odom_publisher_.publish(odom_msg);
   }
