@@ -20,6 +20,26 @@
 
     <xacro:property name="wheel_length" value="0.8e-01" />
     <xacro:property name="wheel_radius" value="1.600e-01" />
+    
+    <!-- Base footprint -->
+    <link name="base_footprint">
+        <visual>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0" />
+            <geometry>
+                 <box size="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin
+                    xyz="0 0 0"
+                    rpy="0 0 0" />
+            <geometry>
+                 <box size="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
 
     <!-- Base link -->
     <link name="base_link">
@@ -41,6 +61,13 @@
           </geometry>
         </collision>
     </link>
+    
+    <joint name="footprint_joint" type="fixed">
+        <origin xyz="0 0 0.180998" rpy="0 0 0" />
+        <parent link="base_footprint" />
+        <child link="base_link" />
+    </joint>
+    
 
     <link name="inertial_link">
         <inertial>
