@@ -22,7 +22,7 @@
         <param name="port_name" type="string" value="$(arg port_name)" />
         <param name="simulated_robot" type="bool" value="$(arg simulated_robot)" />
         <param name="odom_frame" type="string" value="odom" />
-        <param name="base_frame" type="string" value="base_link" />
+        <param name="base_frame" type="string" value="base_footprint" />
         <param name="odom_topic_name" type="string" value="$(arg odom_topic_name)" />
         <param name="pub_tf" type="bool" value="$(arg pub_tf)" />
     </node>

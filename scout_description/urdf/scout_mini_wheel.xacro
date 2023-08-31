@@ -25,7 +25,7 @@
             </collision>
         </link>
 
-        <joint name="${wheel_prefix}_wheel" type="continuous">
+        <joint name="${wheel_prefix}_wheel" type="fixed">
             <parent link="base_link"/>
             <child link="${wheel_prefix}_wheel_link"/>
             <xacro:insert_block name="joint_pose"/>
