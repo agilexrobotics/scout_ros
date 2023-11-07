@@ -23,10 +23,10 @@ int main(int argc, char **argv) {
   static bool is_scout_omni = false;
   //private_node.param<bool>("is_scout_mini", is_scout_mini, false);
   private_node.getParam("is_scout_mini",is_scout_mini);
-  std::cout << "Working as scout mini: " << is_scout_mini << std::endl;
+  ROS_INFO("Working as scout mini: %d",is_scout_mini);
 
   private_node.getParam("is_scout_omni",is_scout_omni);
-  std::cout << "Working as scout omni: " << is_scout_omni << std::endl;
+  ROS_INFO("Working as scout omni: %d",is_scout_omni);
 
   // check protocol version
   ProtocolDetector detector;
@@ -45,8 +45,8 @@ int main(int argc, char **argv) {
               robot = std::unique_ptr<ScoutMiniOmniRobot>(
                           new ScoutMiniOmniRobot(ProtocolVersion::AGX_V2));
           } else {
-              std::cout << "Detected protocol: UNKONWN" << std::endl;
-              return -1;
+              ROS_ERROR("Detected protocol: UNKONWN");
+              //return -1;
           }
       }
       else
@@ -60,12 +60,12 @@ int main(int argc, char **argv) {
               robot = std::unique_ptr<ScoutRobot>(
                           new ScoutRobot(ProtocolVersion::AGX_V2, is_scout_mini));
           } else {
-              std::cout << "Detected protocol: UNKONWN" << std::endl;
-              return -1;
+              ROS_ERROR("Detected protocol: UNKONWN");
+              //return -1;
           }
       }
       if (robot == nullptr)
-          std::cout << "Failed to create robot object" << std::endl;
+          ROS_ERROR("Failed to create robot object");
   }
   catch (const std::exception error)
   {

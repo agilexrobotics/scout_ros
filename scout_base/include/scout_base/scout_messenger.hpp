@@ -61,6 +61,7 @@ private:
     // speed variables
     double linear_speed_ = 0.0;
     double angular_speed_ = 0.0;
+    double lateral_speed_ = 0.0;
     double position_x_ = 0.0;
     double position_y_ = 0.0;
     double theta_ = 0.0;
@@ -71,6 +72,7 @@ private:
     void TwistCmdCallback(const geometry_msgs::Twist::ConstPtr &msg);
     void LightCmdCallback(const scout_msgs::ScoutLightCmd::ConstPtr &msg);
     void PublishOdometryToROS(double linear, double angular, double dt);
+    void PublishOdometryToROSOmni(double linear, double angular, double lateral_velocity, double dt);
 };
 } // namespace westonrobot
 
