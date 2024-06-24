@@ -9,6 +9,7 @@
         * CAN bus: 500k
         * UART: 115200, Parity None, 8-bit Data, 1 Stop Bit 
     -->
+    <arg name="robot_name" default="scout" />
     <arg name="port_name" default="can0" />
     <arg name="is_scout_mini" default="false" />
     <arg name="is_scout_omni" default="false" />
@@ -16,7 +17,7 @@
     <arg name="odom_topic_name" default="odom" />
     <arg name="pub_tf" default="$(arg pub_tf)" />
 
-    <node name="scout_base_node" pkg="scout_base" type="scout_base_node" output="screen" required="true">
+    <node name="scout_base_node" pkg="scout_base" type="scout_base_node" output="screen" required="true" ns="$(arg robot_name)">
         <param name="is_scout_mini" type="bool" value="$(arg is_scout_mini)" />
         <param name="is_scout_omni" type="bool" value="$(arg is_scout_omni)" />
         <param name="port_name" type="string" value="$(arg port_name)" />
