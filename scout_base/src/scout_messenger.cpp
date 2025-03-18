@@ -14,6 +14,7 @@
 #include "scout_msgs/ScoutStatus.h"
 #include "scout_msgs/ScoutBmsStatus.h"
 #include "scout_msgs/ScoutLightCmd.h"
+#include "scout_msgs/ScoutRsStatus.h"
 
 namespace westonrobot
 {
@@ -29,6 +30,7 @@ namespace westonrobot
     odom_publisher_ = nh_->advertise<nav_msgs::Odometry>(odom_topic_name_, 50);
     status_publisher_ = nh_->advertise<scout_msgs::ScoutStatus>("/scout_status", 10);
     BMS_status_publisher_ = nh_->advertise<scout_msgs::ScoutBmsStatus>("/BMS_status", 10);
+    rs_status_publisher_ = nh_->advertise<scout_msgs::ScoutRsStatus>("/rs_status",10);
 
     // cmd subscriber
     motion_cmd_subscriber_ = nh_->subscribe<geometry_msgs::Twist>(
@@ -154,6 +156,7 @@ namespace westonrobot
     // publish scout state message
     scout_msgs::ScoutStatus status_msg;
     scout_msgs::ScoutBmsStatus bms_status;
+    scout_msgs::ScoutRsStatus rs_status_msgs;
 
     status_msg.header.stamp = current_time_;
     status_msg.linear_velocity = robot_state.motion_state.linear_velocity;
@@ -169,6 +172,21 @@ namespace westonrobot
     status_msg.front_light_state.custom_value = robot_state.light_state.front_light.custom_value;
     status_msg.rear_light_state.mode = robot_state.light_state.rear_light.mode;
     status_msg.rear_light_state.custom_value = robot_state.light_state.rear_light.custom_value;
+
+    rs_status_msgs.header.stamp = current_time_;
+    rs_status_msgs.stick_left_h =   robot_state.rc_state.stick_left_h;
+    rs_status_msgs.stick_left_v =   robot_state.rc_state.stick_left_v;
+    rs_status_msgs.stick_right_h =   robot_state.rc_state.stick_right_h;
+    rs_status_msgs.stick_right_v =   robot_state.rc_state.stick_right_v;
+
+    rs_status_msgs.swa = robot_state.rc_state.swa;
+    rs_status_msgs.swb = robot_state.rc_state.swb;
+    rs_status_msgs.swc = robot_state.rc_state.swc;
+    rs_status_msgs.swd = robot_state.rc_state.swd;
+
+    rs_status_msgs.var_a = robot_state.rc_state.var_a;
+    
+
     if(scout_->GetParserProtocolVersion() == ProtocolVersion::AGX_V1)
     {
         for (int i = 0; i < 4; ++i)
@@ -206,7 +224,7 @@ namespace westonrobot
 //      bms_status.Warning_Status_2 = state.Warning_Status_2;
       BMS_status_publisher_.publish(bms_status);
 
-
+    rs_status_publisher_.publish(rs_status_msgs);
     status_publisher_.publish(status_msg);
 
 

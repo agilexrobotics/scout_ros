@@ -53,6 +53,7 @@ add_message_files(
     ScoutLightCmd.msg
     ScoutBmsStatus.msg
     ScoutDriverState.msg
+    ScoutRsStatus.msg
 )
 
 
